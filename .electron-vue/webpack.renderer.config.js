@@ -6,7 +6,7 @@ const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const MinifyPlugin = require("babel-minify-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -19,18 +19,14 @@ const { VueLoaderPlugin } = require('vue-loader')
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-
- // 将vue模块列为白名单
 let whiteListedModules = ['vue']
 
 let rendererConfig = {
-  // 指定sourcemap方法
   devtool: '#cheap-module-eval-source-map',
   entry: {
     renderer: path.join(__dirname, '../src/renderer/main.js')
   },
   externals: [
-     //编译白名单
     ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
   ],
   module: {
@@ -120,19 +116,14 @@ let rendererConfig = {
     ]
   },
   node: {
-    //根据版本信息确定__dirname和__filename的行为
     __dirname: process.env.NODE_ENV !== 'production',
     __filename: process.env.NODE_ENV !== 'production'
   },
   plugins: [
     new VueLoaderPlugin(),
-    // css文件分类
     new MiniCssExtractPlugin({filename: 'styles.css'}),
-    // 自动生成HTML页面
     new HtmlWebpackPlugin({
-      // 生成页面的名称
       filename: 'index.html',
-      // 以哪个页面为模板生成
       template: path.resolve(__dirname, '../src/index.ejs'),
       minify: {
         collapseWhitespace: true,
@@ -143,9 +134,7 @@ let rendererConfig = {
         ? path.resolve(__dirname, '../node_modules')
         : false
     }),
-    // 热更新模块
     new webpack.HotModuleReplacementPlugin(),
-    // 在编译出现错误时，使用NoEmitOnErrorsPlugin来跳出输出阶段
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
@@ -155,14 +144,11 @@ let rendererConfig = {
   },
   resolve: {
     alias: {
-      // 在代码中使用@代表render目录
       '@': path.join(__dirname, '../src/renderer'),
-      // 精确指定vue特指vue.esm.js文件
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
-
-  // target配置项可以让Webpack构建出针对不同运行环境下的代码。这里指定为Electron渲染线程
+  },
   target: 'electron-renderer'
 }
 
@@ -184,7 +170,7 @@ if (process.env.NODE_ENV === 'production') {
   rendererConfig.devtool = ''
 
   rendererConfig.plugins.push(
-    new BabiliWebpackPlugin(),
+    new MinifyPlugin(),
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../static'),

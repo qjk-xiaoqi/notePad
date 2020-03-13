@@ -1,20 +1,48 @@
+'use strict'
+
+import { app, BrowserWindow } from 'electron'
+
 /**
- *  主进程真正的入口文件
+ * Set `__static` path to static files in production
+ * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-const {app, BrowserWindow} = require('electron');
+if (process.env.NODE_ENV !== 'development') {
+  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+}
 
-let mainwindow;// 主窗口
+let mainWindow
+const winURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:9080`
+  : `file://${__dirname}/index.html`
 
-app.on('ready', () => {
-    // 初始化主窗口
-    mainwindow = new BrowserWindow({
-        width: 1000,
-        height: 560,
-        title: 'never forget',
-        frame: false,
-        useContentSize: true,
-        webPreferences: {
-            nodeIntegration: true// 可以使用node的API
-        }
-    })
+function createWindow () {
+  /**
+   * Initial window options
+   */
+  mainWindow = new BrowserWindow({
+    height: 563,
+    useContentSize: true,
+    width: 1000
+    // frame: false
+  })
+
+  mainWindow.loadURL(winURL)
+
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+}
+
+app.on('ready', createWindow)
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow()
+  }
 })

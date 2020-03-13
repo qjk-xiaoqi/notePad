@@ -1,9 +1,21 @@
 const hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true')
 
-// 注册webpack-hot-middleware监听器
 hotClient.subscribe(event => {
-// 这里只处理了Main进程发送的`compiling`事件.
-// 我们直接来说作用，他负责在编译过程中，在界面上显示“Compiling Main Process…”的提示语
+  /**
+   * Reload browser when HTMLWebpackPlugin emits a new index.html
+   *
+   * Currently disabled until jantimon/html-webpack-plugin#680 is resolved.
+   * https://github.com/SimulatedGREG/electron-vue/issues/437
+   * https://github.com/jantimon/html-webpack-plugin/issues/680
+   */
+  // if (event.action === 'reload') {
+  //   window.location.reload()
+  // }
+
+  /**
+   * Notify `mainWindow` when `main` process is compiling,
+   * giving notice for an expected reload of the `electron` process
+   */
   if (event.action === 'compiling') {
     document.body.innerHTML += `
       <style>

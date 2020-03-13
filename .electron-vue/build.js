@@ -1,59 +1,54 @@
 'use strict'
 
-// 环境生产环境
 process.env.NODE_ENV = 'production'
 
-//  一些引用
 const { say } = require('cfonts')
 const chalk = require('chalk')
-const del = require('del') // Delete files and directories
-const { spawn } = require('child_process')
+const del = require('del')
+const packager = require('electron-packager')
 const webpack = require('webpack')
 const Multispinner = require('multispinner')
 
-// 使用的配置文件
+const buildConfig = require('./build.config')
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
 const webConfig = require('./webpack.web.config')
-
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' '
 const errorLog = chalk.bgRed.white(' ERROR ') + ' '
 const okayLog = chalk.bgBlue.white(' OKAY ') + ' '
 const isCI = process.env.CI || false
 
-// 除了clean与web的命令外，其他指令都会进行build()操作
 if (process.env.BUILD_TARGET === 'clean') clean()
 else if (process.env.BUILD_TARGET === 'web') web()
 else build()
 
-// clean命令对应的操作
 function clean () {
   del.sync(['build/*', '!build/icons', '!build/icons/icon.*'])
   console.log(`\n${doneLog}\n`)
   process.exit()
 }
 
-
-
-
-// build命令对应的操作
 function build () {
-  greeting(); // 控制台输出的开始log
+  greeting()
+
   del.sync(['dist/electron/*', '!.gitkeep'])
+
   const tasks = ['main', 'renderer']
   const m = new Multispinner(tasks, {
     preText: 'building',
     postText: 'process'
   })
+
   let results = ''
+
   m.on('success', () => {
     process.stdout.write('\x1B[2J\x1B[0f')
     console.log(`\n\n${results}`)
-    console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
-    process.exit()
+    console.log(`${okayLog}take it away ${chalk.yellow('`electron-packager`')}\n`)
+    bundleApp()
   })
-  // 打包主进程
+
   pack(mainConfig).then(result => {
     results += result + '\n\n'
     m.success('main')
@@ -63,7 +58,7 @@ function build () {
     console.error(`\n${err}\n`)
     process.exit(1)
   })
-  // 打包渲染进程
+
   pack(rendererConfig).then(result => {
     results += result + '\n\n'
     m.success('renderer')
@@ -74,8 +69,6 @@ function build () {
     process.exit(1)
   })
 }
-
-
 
 function pack (config) {
   return new Promise((resolve, reject) => {
@@ -105,7 +98,18 @@ function pack (config) {
   })
 }
 
-// web命令对应的操作
+function bundleApp () {
+  buildConfig.mode = 'production'
+  packager(buildConfig, (err, appPaths) => {
+    if (err) {
+      console.log(`\n${errorLog}${chalk.yellow('`electron-packager`')} says...\n`)
+      console.log(err + '\n')
+    } else {
+      console.log(`\n${doneLog}\n`)
+    }
+  })
+}
+
 function web () {
   del.sync(['dist/web/*', '!.gitkeep'])
   webConfig.mode = 'production'
@@ -120,8 +124,6 @@ function web () {
     process.exit()
   })
 }
-
-
 
 function greeting () {
   const cols = process.stdout.columns
