@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 
 const chalk = require('chalk')
 const electron = require('electron')
@@ -73,7 +73,7 @@ function startRenderer () {
       }
     )
 
-    server.listen(9080)
+    server.listen(9089)
   })
 }
 

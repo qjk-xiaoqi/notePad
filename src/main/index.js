@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
+  ? `http://localhost:9089`
   : `file://${__dirname}/index.html`
 
 function createWindow () {
@@ -22,8 +22,9 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1000
-    // frame: false
+    width: 1000,
+    // 隐藏默认窗口框
+    frame: false
   })
 
   mainWindow.loadURL(winURL)
@@ -45,4 +46,24 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+
+// 引入ipcMain与渲染进程通信
+const ipcMain = require('electron').ipcMain;
+
+ipcMain.on('min-app',()=>{
+     mainWindow.minimize();
+})
+ipcMain.on('max-app',()=>{
+  mainWindow.maximize();
+})
+ipcMain.on('close-app',()=>{
+  mainWindow.close();
+  //  mainWindow.webContents.send('app-close');
+  //  ipcMain.on('close-app-ok',()=>{
+  //   if(mainWindow){
+    
+  //   }
+  //  });
 })
