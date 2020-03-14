@@ -2,8 +2,8 @@
   <div id="app">
     <!-- 头部 -->
     <app-top></app-top>
-    <!-- 菜单 -->
-    <app-memu></app-memu>
+     <!-- 菜单 -->
+    <app-menu></app-menu>
     <!-- 内容 -->
     <div class="content" >
         <router-view></router-view>

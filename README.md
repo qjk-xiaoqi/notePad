@@ -31,6 +31,8 @@ npm run lint
 # day3 
 + 头部实现ed
 + 菜单栏实现ing
++ 疑惑的地方： 对ElementUI `el-menu-item`中`slot`不解。
++ 如何解决: 查看源码，`el-menu-item`组件本质是<li>与<slot>的封装`<li> <slot name="title"></slot></li>`这样就很好理解了，在父组件使用`<span slot="title">备忘录</span>`其实就是具名Slot的使用，直接插入到`el-menu-item`组件中。
 ---
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
