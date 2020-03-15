@@ -34,8 +34,15 @@ html, body {
 #app {
   height: 100%;
 }
+.content {
+  position: absolute;
+  top: 30px;
+  left: 65px;
+  right: 0;
+  bottom:0;
+  /* background: rgb(245, 195, 202); */
 
-
+}
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
   width: 5px;

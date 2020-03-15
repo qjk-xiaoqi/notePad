@@ -1,9 +1,9 @@
 <template>
    <!-- 项目菜单 -->  
    <el-menu  default-active="memo"  :collapse="true" 
-      class="el-menu-vertical-demo left-app-menu"  @select="indexChange">
+      class="el-menu-vertical-demo left-app-menu" >
        <el-menu-item index="memo" @click="toEdit()">
-          <i class="el-icon-edit"></i>
+          <i class="el-icon-date"></i>
           <span slot="title">备忘录</span>
        </el-menu-item>
        <el-menu-item index="eyeProtection" @click="toEye()">
@@ -22,7 +22,21 @@
 </template>
 <script>
 export default {
-    
+  methods: {
+    toEdit () {
+      this.$router.push('/')
+    },
+    toEye () {
+      this.$router.push('/eyeProtection')
+    },
+    toRobot () {
+      this.$router.push('/robot')
+    },
+    toSetting () {
+      this.$router.push('/setting')
+    }
+
+  }
 }
 </script>
 <style scoped>

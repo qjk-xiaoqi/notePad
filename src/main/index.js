@@ -48,22 +48,21 @@ app.on('activate', () => {
   }
 })
 
-
 // 引入ipcMain与渲染进程通信
-const ipcMain = require('electron').ipcMain;
+const ipcMain = require('electron').ipcMain
 
-ipcMain.on('min-app',()=>{
-     mainWindow.minimize();
+ipcMain.on('min-app', () => {
+  mainWindow.minimize()
 })
-ipcMain.on('max-app',()=>{
-  mainWindow.maximize();
+ipcMain.on('max-app', () => {
+  mainWindow.maximize()
 })
-ipcMain.on('close-app',()=>{
-  mainWindow.close();
+ipcMain.on('close-app', () => {
+  mainWindow.close()
   //  mainWindow.webContents.send('app-close');
   //  ipcMain.on('close-app-ok',()=>{
   //   if(mainWindow){
-    
+
   //   }
   //  });
 })

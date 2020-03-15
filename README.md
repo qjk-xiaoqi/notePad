@@ -25,14 +25,21 @@ npm run lint
 
 # day2
 + 项目头部实现ing
-+ 遇到的问题：项目显示成一个文件浏览器。原因：项目初始设置eslint来检查代码，比较严格，src/renderderzhon中出现错误导致一个无效的webpack的renderer.js生成出来，打断了htmlWebpackPlugin创建index.html.由于webpack-dev-server 没有index.html可以提供的服务器，所以服务器失败，程序返回文件浏览器。
-+ 如何解决: 在开发中尽量关闭eslink来检查代码，因为它实在太严格。
++ 遇到的问题：项目显示成一个文件浏览器。原因：项目初始设置`eslint`来检查代码，比较严格，`src/renderder`中出现错误导致一个无效的`webpack`的`renderer.js`生成出来，打断了`htmlWebpackPlugin`创建`index.html`.由于`webpack-dev-server `没有`index.html`可以提供的服务器，所以服务器失败，程序返回文件浏览器。
++ 如何解决: 在开发中尽量关闭`eslink`来检查代码，因为它实在太严格。
 
 # day3 
 + 头部实现ed
 + 菜单栏实现ing
 + 疑惑的地方： 对ElementUI `el-menu-item`中`slot`不解。
 + 如何解决: 查看源码，`el-menu-item`组件本质是<li>与<slot>的封装`<li> <slot name="title"></slot></li>`这样就很好理解了，在父组件使用`<span slot="title">备忘录</span>`其实就是具名Slot的使用，直接插入到`el-menu-item`组件中。
+
+# day4
++ 菜单功能基本实现ed
++ 遇到的问题： `vue router` 报错：`Uncaught (in promise) NavigationDuplicated`
++ 如何解决：删除项目依赖的 `node_modules `文件夹
++ 记事本模块ing : 使用ElementUI组件中的`el-row`与`el-col`快速分块：添加新任务模块、未完成模块、已完成模块。
+  + 添加新任务模块ing
 ---
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

@@ -17,22 +17,22 @@
 <script>
 
 // 引入ipcRenderder模块与主进程进行通信
-const ipcRenderder = require('electron').ipcRenderer;
+const ipcRenderder = require('electron').ipcRenderer
 export default {
-    methods: {
-        // 最小化 app
-        minApp(){
-            ipcRenderder.send('min-app');
-        },
-        // 最大化 app
-        maxApp(){
-            ipcRenderder.send('max-app');
-        },
-        // 关闭 app
-        closeApp(){
-            ipcRenderder.send('close-app');
-        }
-    }   
+  methods: {
+    // 最小化 app
+    minApp () {
+      ipcRenderder.send('min-app')
+    },
+    // 最大化 app
+    maxApp () {
+      ipcRenderder.send('max-app')
+    },
+    // 关闭 app
+    closeApp () {
+      ipcRenderder.send('close-app')
+    }
+  }
 }
 </script>
 <style  scoped>

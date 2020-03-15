@@ -11,6 +11,21 @@ export default new Router({
       component: require('@/pages/memo').default
     },
     {
+      path: '/eyeProtection',
+      name: 'memo',
+      component: require('@/pages/eyeProtection').default
+    },
+    {
+      path: '/robot',
+      name: 'memo',
+      component: require('@/pages/robot').default
+    },
+    {
+      path: '/setting',
+      name: 'memo',
+      component: require('@/pages/setting').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
