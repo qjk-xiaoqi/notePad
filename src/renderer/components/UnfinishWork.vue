@@ -6,7 +6,21 @@
                 (<span>{{this.unfinishWork.length}}</span>)
             </div>
             <div class="unfinish-content">
-
+                <div v-for="(work, index) in unfinishWork" :key="index">
+                    <p class="work-name">
+                        <span>任务名称：</span>
+                        <span v-text="work.name" :title="work.name"></span>
+                    </p>
+                    <p class="work-content">
+                        <span>任务细节：</span>
+                        <span v-text="work.content" :title="work.content"></span>
+                    </p>
+                    <div class="oparation-icon">
+                      <i class="iocns el-icon-upload2" title="置顶" ></i>
+                      <i class="iocns el-icon-check" title="完成" ></i>
+                      <i class="iocns el-icon-close" title="删除" ></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -17,6 +31,10 @@ export default {
     return {
       unfinishWork:[]
     }
+  },
+  mounted() {
+    // 组件挂载完 就形成对应关系
+    this.unfinishWork = this.$store.state.work.unfinishWork;
   }
 }
 </script>

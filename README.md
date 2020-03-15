@@ -39,7 +39,14 @@ npm run lint
 + 遇到的问题： `vue router` 报错：`Uncaught (in promise) NavigationDuplicated`
 + 如何解决：删除项目依赖的 `node_modules `文件夹
 + 记事本模块ing : 使用ElementUI组件中的`el-row`与`el-col`快速分块：添加新任务模块、未完成模块、已完成模块。
-  + 添加新任务模块ing
+  + 添加新任务模块样式ed
+  + 未完成模块ed
+
+# day5 
++ Vuex实现模块之间（添加新任务模块与未完成模块）的数据交互
++ 
+
+
 ---
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
