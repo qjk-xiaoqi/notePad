@@ -1,6 +1,7 @@
 
 const state = {
     unfinishWork:[],
+    finishWork:[],
     nextID: 0
 };
 const getters = {
@@ -28,6 +29,17 @@ const mutations = {
 
         // 数组头部插入数据
         state.unfinishWork.unshift(...newarr);
+    },
+    doFinish(sate, id) {
+        let index = findIndex(state.unfinishWork, id);
+        let newarr = state.unfinishWork.splice(index, 1);
+        // 点击完成后，添加到finishWork数组中
+        state.finishWork.push(...newarr);
+    },
+    // 删除未完成的任务
+    doDelete(sate, id) {
+        let index = findIndex(state.unfinishWork, id);
+        state.unfinishWork.splice(index, 1);
     }
 };
 

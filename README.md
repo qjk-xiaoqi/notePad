@@ -39,12 +39,13 @@ npm run lint
 + 遇到的问题： `vue router` 报错：`Uncaught (in promise) NavigationDuplicated`
 + 如何解决：删除项目依赖的 `node_modules `文件夹
 + 记事本模块ing : 使用ElementUI组件中的`el-row`与`el-col`快速分块：添加新任务模块、未完成模块、已完成模块。
-  + 添加新任务模块样式ed
-  + 未完成模块ed
+  + 添加新任务模块布局ed
+  + 未完成模块布局ed
 
 # day5 
 + Vuex实现模块之间（添加新任务模块与未完成模块）的数据交互ed
 + 未完成模块中（置顶、删除、完成按钮）点击数据交互ed
++ 已完成模块布局ing
 
 
 ---
