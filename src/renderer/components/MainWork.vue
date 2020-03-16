@@ -1,7 +1,7 @@
 <template>
     <div class="main-work">
         <div class="from-row">
-            <p>任务名称: {{un}}</p>
+            <p>任务名称:</p>
             <el-input v-model="name" placeholder="请输入任务名称" size="small"></el-input>
         </div>
         <div class="from-row">
@@ -17,7 +17,7 @@
             </el-switch>
         </div>
        
-        <el-button type="primary" @click="addNewWork()"><i class="el-icon-edit" ></i>添加任务</el-button>
+        <el-button type="primary" @click="addNewWork"><i class="el-icon-edit" ></i>添加任务</el-button>
     </div>
 </template>
 <script>
@@ -30,17 +30,12 @@ export default {
             isTop: false
         }
     },
-    computed: {
-        un() {
-            return this.$store.getters.getID;
-        }
-    },
     methods: {
         addNewWork() {
             // 检查填写是否为空
             if(this.name === '' || this.content === ''){
                 this.$message.error("请输入内容");
-                return ;
+                return;
             }
             //先增加ID，再获取ID
             this.$store.commit('addID');

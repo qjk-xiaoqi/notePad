@@ -16,9 +16,9 @@
                         <span v-text="work.content" :title="work.content"></span>
                     </p>
                     <div class="oparation-icon">
-                      <i class="iocns el-icon-upload2" title="置顶" ></i>
-                      <i class="iocns el-icon-check" title="完成" ></i>
-                      <i class="iocns el-icon-close" title="删除" ></i>
+                      <i class="iocns el-icon-upload2" title="置顶" @click="toTop(work.ID)" ></i>
+                      <i class="iocns el-icon-check" title="完成" @click="finished(work.ID)"></i>
+                      <i class="iocns el-icon-close" title="删除" @click="remove(work.ID)"></i>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,17 @@ export default {
   data() {
     return {
       unfinishWork:[]
+    }
+  },
+  methods: {
+    toTop(id) {
+        this.$store.commit('topWork',id);
+    },
+    finished(id) {
+         this.$store.commit('doFinish',id);
+    },
+    remove(id) {
+        this.$store.commit('doDelete',id);
     }
   },
   mounted() {
