@@ -6,13 +6,13 @@
                 (<span>{{this.unfinishWork.length}}</span>)
             </div>
             <div class="unfinish-content">
-                <div v-for="(work, index) in unfinishWork" :key="index">
+                <div v-for="(work, index) in unfinishWork" :key="index" class="oneWork">
                     <p class="work-name">
-                        <span>任务名称：</span>
+                        <span class="space">任务名称：</span>
                         <span v-text="work.name" :title="work.name"></span>
                     </p>
                     <p class="work-content">
-                        <span>任务细节：</span>
+                        <span class="space">任务细节：</span>
                         <span v-text="work.content" :title="work.content"></span>
                     </p>
                     <div class="oparation-icon">
@@ -58,6 +58,65 @@ export default {
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid  #ebeef5;
+  }
+  & > .unfinish-content{
+    position: absolute;
+    top: 41px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: scroll;
+  }
+}
+.oneWork {
+  padding: 5px 5px 8px;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(248, 220, 225);
+  }
+  .work-name {
+      font-size: 14px;
+  }
+  .work-content {
+    font-size: 13px;
+  }
+  .work-name,
+  .work-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .space {
+      margin-bottom: 2px;
+  }
+  .oparation-icon {
+    position: absolute;
+    top: 0px;
+    right:0px;
+    height: 45px;
+    line-height: 45px;
+    display: none;
+    background-color: rgb(248, 220, 225);
+    .el-icon-upload2 {
+      &:hover {
+        color: #409EFF;
+      }
+    }
+    .el-icon-check {
+      &:hover {
+        color: #409EFF;
+      }
+    }
+    .el-icon-close {
+      &:hover {
+        color: #F56C6C;
+      }
+    }
+
+  }
+  &:hover .oparation-icon {
+    display: block;
   }
 }
 
