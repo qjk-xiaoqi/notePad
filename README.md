@@ -32,7 +32,7 @@ npm run lint
 + 头部实现ed
 + 菜单栏实现ing
 + 疑惑的地方： 对ElementUI `el-menu-item`中`slot`不解。
-+ 如何解决: 查看源码，`el-menu-item`组件本质是<li>与<slot>的封装`<li> <slot name="title"></slot></li>`这样就很好理解了，在父组件使用`<span slot="title">备忘录</span>`其实就是具名Slot的使用，直接插入到`el-menu-item`组件中。
++ 如何解决: 查看源码，`el-menu-item`组件本质是`<li>`与`<slot>`的封装`<li> <slot name="title"></slot></li>`这样就很好理解了，在父组件使用`<span slot="title">备忘录</span>`其实就是具名Slot的使用，直接插入到`el-menu-item`组件中。
 
 # day4
 + 菜单功能基本实现ed
@@ -50,6 +50,17 @@ npm run lint
   + 已完成模块数据交互ed
 + 记事本模块ed
 
+# day6
++ 护眼模块ing
+  + 护眼模块样式ed
+  + 遇到的问题： 开启护眼模式之后，计时问题。
+  + 如何解决： 使用worker线程。组件挂载时，就创建worker线程，开启护眼模式后，向子线程发送消息.
+    当时间快到时，子线程向主进程发消息，主进程再做相应的操作。
+  + 护眼遮罩页面ed
++ 护眼模块ed
+
+# day7
++ 
 
 
 
