@@ -17,7 +17,7 @@
             </el-switch>
         </div>
        
-        <el-button type="primary" @click="addNewWork"><i class="el-icon-edit" ></i>添加任务</el-button>
+        <el-button  type="primary" @click="addNewWork"><i class="el-icon-edit" ></i>添加任务</el-button>
     </div>
 </template>
 <script>
@@ -61,6 +61,7 @@ export default {
         & > p {
             margin-bottom: 10px;
         }
+         
     }
 }   
 .el-icon-edit{
