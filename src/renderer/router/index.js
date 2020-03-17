@@ -12,17 +12,17 @@ export default new Router({
     },
     {
       path: '/eyeProtection',
-      name: 'memo',
+      name: 'eyeProtection',
       component: require('@/pages/eyeProtection').default
     },
     {
       path: '/robot',
-      name: 'memo',
+      name: 'robot',
       component: require('@/pages/robot').default
     },
     {
       path: '/setting',
-      name: 'memo',
+      name: 'setting',
       component: require('@/pages/setting').default
     },
     {

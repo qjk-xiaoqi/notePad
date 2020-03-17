@@ -1,6 +1,6 @@
 <template>
-   <!-- 项目菜单 -->  
-   <el-menu  default-active="memo"  :collapse="true" 
+   <!-- 项目菜单 default-active="memo"  -->  
+   <el-menu   :collapse="true" 
       class="el-menu-vertical-demo left-app-menu" >
        <el-menu-item index="memo" @click="toEdit()">
           <i class="el-icon-date"></i>

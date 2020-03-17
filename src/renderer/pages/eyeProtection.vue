@@ -9,9 +9,9 @@
     <p>
       <span>间隔时间：</span>
       <el-input-number 
-      :min="30" 
+      :min="1" 
       :max="180" 
-      :step="10"
+      :step="5"
       v-model="defTime"
       ></el-input-number>
     </p>
@@ -19,14 +19,15 @@
   </div>
 </template>
 <script>
-import func from '../../../vue-temp/vue-editor-bridge';
 const ipcRenderer = require('electron').ipcRenderer;
 let worker = null; // 开启一个线程
+let _this;
 export default {
   data() {
     return {
       isOpen: false,
-      defTime: 60
+      defTime: 60,
+      duration: 1// 休息时间
     }
   },
   methods: {
@@ -39,14 +40,24 @@ export default {
     }
   },
   mounted() {
+    _this = this;
     // 组件挂载时创建线程
     worker = new Worker('/src/renderer/assets/eyeWorker.js');
     // 监听子进程发回的数据
     worker.onmessage = function(event) {
-
+      if(event.data == 10) {
+        // 如果传过来的seconds大于0，弹窗，告知用户眼保模式要开启了
+          _this.$message.warning("即将进入护眼模式");
+      }
+      if(event.data == 0){
+        // 时间到了 开启护眼
+        ipcRenderer.send('open-eye',_this.duration * 60);
+      }
     }
-
-    // ipcRenderer.on('')
+    // 重新计时
+    ipcRenderer.on('re-open-eye', ()=>{
+      _this.save();
+    })
 
   }
 }
