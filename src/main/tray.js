@@ -1,17 +1,15 @@
-let mainWindow = null;
-let appTray = null; // 托盘实例
 const electron = require('electron');
 const ipcMain = electron.ipcMain;
 const path = require('path');
 const Menu = electron.Menu;
 const Tray = electron.Tray;
 
-ipcMain.on('open-tray', ()=>{
-    setTray();
-})
+let mainWindow = null;
+let appTray = null; // 托盘实例
+
 
 // 隐藏主窗口，并创建托盘
-function setTray(mainWindow) {
+function setTray() {
     // 当托盘最小化时，右击有一个菜单显示，这里进设置一个退出的菜单
     let trayMenuTemplate = [{ // 系统托盘图标目录
         label: '退出',
@@ -36,9 +34,14 @@ function setTray(mainWindow) {
         // 显示主程序
         mainWindow.show();
         // 关闭托盘显示
-        appTray.destory();
+        appTray.destroy();
     });
 }
+
+// 主进程监听打开托盘事件
+ipcMain.on('open-tray', ()=>{
+    setTray();
+})
 
 module.exports = function (main){
     mainWindow = main;

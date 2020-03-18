@@ -8,7 +8,6 @@
           </el-checkbox>
         </div>
         <el-button class="button" type="primary" @click="saveSetting">保存</el-button>
-
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -28,7 +27,7 @@
     // 组件挂载时，获取设置
     mounted() {
       // 从缓存中获取配置
-      this.$store.commit('getConfig');
+      // this.$store.commit('getConfig');
       this.tray = this.$store.state.setting.isTray;
     }
   }

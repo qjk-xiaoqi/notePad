@@ -1,7 +1,7 @@
 <template>
-   <!-- 项目菜单 default-active="memo"  -->  
-   <el-menu   :collapse="true" 
-      class="el-menu-vertical-demo left-app-menu" >
+   <!-- 项目菜单   -->  
+   <el-menu  default-active="memo" :collapse="true" 
+      class="el-menu-vertical-demo left-app-menu" @select="indexChange" >
        <el-menu-item index="memo" @click="toEdit()">
           <i class="el-icon-date"></i>
           <span slot="title">备忘录</span>
@@ -24,7 +24,18 @@
 const ipcRenderer = require('electron').ipcRenderer;
 let _this = null;
 export default {
+  data() {
+      return {
+        nowIndex: '', // 当前所在页面
+        lastIndex:'' 
+      }
+    },
   methods: {
+    indexChange(index) {
+        // 修改当前所在的页面
+        this.lastIndex = this.nowIndex;
+        this.nowIndex = index;
+    },
     toEdit () {
       this.$router.push('/')
     },
@@ -40,19 +51,30 @@ export default {
   },
   mounted() {
     _this = this;
+    this.nowIndex = 'memo';
+    this.lastIndex = 'memo';
+  },
+  watch: {
+    nowIndex() {
+      // 当从设置页面切出时，要保存一下当前的设置
+      if('setting' === this.lastIndex){
+        this.$store.commit('saveTray');
+      }
+    }
   }
 };
 // 监听关闭事件
 ipcRenderer.on('app-close', ()=>{
   let tray = _this.$store.state.setting.isTray;
   // 写入缓存 待实现
+  
   // 判断是否要最小化托盘
   if(tray) {
     // 如果设置了托盘，通知主进程要最小化托盘
     ipcRenderer.send('open-tray');
   }else{
     // 直接关闭应用
-    ipcRenderer.send('close-app');
+    ipcRenderer.send('close-app-ok');
   }
 })
 </script>

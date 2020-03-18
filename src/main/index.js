@@ -40,6 +40,7 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
 }
 
 
@@ -58,9 +59,9 @@ app.on('activate', () => {
   }
 })
 
+
 // 引入ipcMain与渲染进程通信
 const ipcMain = require('electron').ipcMain
-
 // 最小化窗口
 ipcMain.on('min-app', () => {
   mainWindow.minimize()
@@ -77,12 +78,14 @@ ipcMain.on('max-app', () => {
 ipcMain.on('close-app', () => {
   // 告知窗口即将关闭，检查是否设置了托盘功能
   mainWindow.webContents.send('app-close');
-  ipcMain.on('close-app',()=>{
+  ipcMain.on('close-app-ok',()=>{
     if(mainWindow){
     mainWindow.close()
     }
    });
 });
+
+
 
 
 // 眼保模式
@@ -117,3 +120,15 @@ function  closeEye() {
     mainWindow.webContents.send('re-open-eye');
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+

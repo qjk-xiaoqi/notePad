@@ -45,7 +45,6 @@ export default {
                 ID: this.$store.getters.getID,
                 isTop: this.isTop
             });
-            console.log(this.$store.state.work.unfinishWork.length);
             this.name = "";
             this.content = "";
 
