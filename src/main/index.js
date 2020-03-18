@@ -73,11 +73,11 @@ ipcMain.on('max-app', () => {
 });
 // 关闭窗口
 ipcMain.on('close-app', () => {
-  mainWindow.close()
-  //  mainWindow.webContents.send('app-close');
+  // 告知窗口即将关闭，检查是否设置了托盘功能
+  mainWindow.webContents.send('app-close');
   //  ipcMain.on('close-app-ok',()=>{
   //   if(mainWindow){
-
+    mainWindow.close()
   //   }
   //  });
 });
