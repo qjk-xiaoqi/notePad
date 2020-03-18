@@ -15,6 +15,8 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9089`
   : `file://${__dirname}/index.html`
 
+// 引入创建托盘函数
+let tray = require('./tray');
 function createWindow () {
   /**
    * Initial window options
@@ -34,14 +36,14 @@ function createWindow () {
     // 关闭眼保
     closeEye();
   })
-
+  tray(mainWindow);
   mainWindow.on('closed', () => {
     mainWindow = null
   })
-
- 
 }
 
+
+// 创建主窗口
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
@@ -75,11 +77,11 @@ ipcMain.on('max-app', () => {
 ipcMain.on('close-app', () => {
   // 告知窗口即将关闭，检查是否设置了托盘功能
   mainWindow.webContents.send('app-close');
-  //  ipcMain.on('close-app-ok',()=>{
-  //   if(mainWindow){
+  ipcMain.on('close-app',()=>{
+    if(mainWindow){
     mainWindow.close()
-  //   }
-  //  });
+    }
+   });
 });
 
 

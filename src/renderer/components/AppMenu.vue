@@ -21,6 +21,8 @@
     </el-menu>
 </template>
 <script>
+const ipcRenderer = require('electron').ipcRenderer;
+let _this = null;
 export default {
   methods: {
     toEdit () {
@@ -35,9 +37,24 @@ export default {
     toSetting () {
       this.$router.push('/setting')
     }
-
+  },
+  mounted() {
+    _this = this;
   }
-}
+};
+// 监听关闭事件
+ipcRenderer.on('app-close', ()=>{
+  let tray = _this.$store.state.setting.isTray;
+  // 写入缓存 待实现
+  // 判断是否要最小化托盘
+  if(tray) {
+    // 如果设置了托盘，通知主进程要最小化托盘
+    ipcRenderer.send('open-tray');
+  }else{
+    // 直接关闭应用
+    ipcRenderer.send('close-app');
+  }
+})
 </script>
 <style scoped>
  .left-app-menu{
