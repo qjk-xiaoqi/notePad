@@ -20,7 +20,6 @@
    
 </template>
 <script>
-import { ipcRenderer } from 'electron';
 const ipcRenderder = require('electron').ipcRenderer;
 let _this = null;
     export default {
@@ -37,6 +36,10 @@ let _this = null;
                     this.$message('您没有输入内容');
                     return;
                 }
+                 // 通知主进程发请求
+                ipcRenderder.send('http-request', {
+                    text: this.msg
+                })
                 // 点击发送或者回车，向talk中插入一条my msg
                 this.talk.push({
                     msgID: this.msgID,
@@ -46,27 +49,25 @@ let _this = null;
                 })
                 this.msgID ++ ;
                 this.msg = '';
-                // 通知主进程发请求
-                ipcRenderer.send('http-request', {
-                    text: this.msg,
-                    methods: 'POST'
-                })
+               
             }
         },
         mounted() {
             _this = this;
             // 组件挂载时，向对话框中插入一条robot的msg
             this.talk.push({
-                msgID:0,
+                msgID: 0,
                 content: '你好啊',
                 belongTo: 'robot'
             });
 
             // 监听主进程发回的消息
-            ipcRenderer.on('http-response',(event,data)=>{
-                let response = JSON.parse(data);
+            ipcRenderder.on('http-response',(event,data)=>{
+                // console.log('aa');
+                //  获取响应的数据(json字符串转对象)
+                let response = JSON.parse(data.dataStr).results[0].values.text;
                 _this.talk.push({
-                    msgID: _this.index,
+                    msgID: _this.msgID,
                     content: response,
                     belongTo: 'robot'
                 });

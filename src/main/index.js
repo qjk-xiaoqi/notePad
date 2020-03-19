@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow, globalShortcut } from 'electron'
+import { Http2ServerRequest } from 'http2'
 
 /**
  * Set `__static` path to static files in production
@@ -124,9 +125,73 @@ function  closeEye() {
 
 
 
+const http = require('http');
+let server = null;
+
+// 监听http-request事件
+ipcMain.on('http-request', (e, config) => {
+  if (!server) {
+      httpRequest(config);
+  }
+});
+
+function httpRequest(config) {
+  let info = combineInfo(config);
+  console.log(info);
+  // 请求配置
+  var options = {  
+      hostname: 'openapi.tuling123.com',
+      path: '/openapi/api/v2',
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+  };
+
+  var robotServer = http.request(options, function (res) {
+      let data = '';
+      res.setEncoding('utf8');  
+      // console.log('STATUS: ' + res.statusCode);
+      res.on('data', function (chunk) {
+          data += chunk;
+      });  
+      res.on('end', function() {
+          // 接受完成，发送给页面
+          mainWindow.webContents.send('http-response', {
+            dataStr: data
+          });
+         // console.log('datadatadatadatadata: ' + data);
+      })
+  });
+
+  robotServer.write(info);
+  robotServer.end();  
+}
+
+// 将输入的信息整合成正确的请求参数信息
+function combineInfo(config) {
+  let info = config.text,
+    msg = {
+    "reqType":0,
+    "perception": {
+        "inputText": {
+            "text": info
+        }
+    },
+    "userInfo": {
+        "apiKey": "ece8ccf9c4e44520ba5b28cbafa04940",
+        "userId": ~~(Math.random() * 99999)
+    }
+  };
+  // 返回json类型
+  return JSON.stringify(msg);
+}
 
 
 
+
+
+ 
 
 
 
