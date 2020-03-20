@@ -1,12 +1,18 @@
+import cache from '../../assets/dataBase';
+
 const state = {
     isTray: false
 };
 const mutations = {
     getConfig() {
-        // state.
+        let setting = cache.getSetting();
+
     },
     saveTray(state, tray) {
         state.isTray = tray;
+        let setting = cache.getSetting();
+        setting.all.alwaysTray = state.isTray;
+        cache.saveSetting(setting);
     }
 }
 const actions = {

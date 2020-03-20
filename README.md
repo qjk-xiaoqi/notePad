@@ -70,9 +70,14 @@ npm run lint
 + 机器人模块ing
   + 模块样式ed
   + 本模块实现的功能： 实现一个聊天机器人与用户聊天
-  + 调用的接口：借助`图灵机器人`api，来实现该功能
+  + 使用node中的http.request模块作为客户端发请求，调用的接口：借助`图灵机器人`api
 + 机器人模块ed
 
+# day9
++ 缓存处理ing
+  + 由于使用Vuex刷新页面之后数据会丢失，最后做一下缓存处理（使用localStorage）
++ 缓存处理ed
++ 测试功能
 ---
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

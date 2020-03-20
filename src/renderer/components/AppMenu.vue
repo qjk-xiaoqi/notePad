@@ -32,6 +32,13 @@ export default {
     },
   methods: {
     indexChange(index) {
+        if ('memo' === this.nowIndex && 'memo' !== index) {
+                // 切离memo，触发保存到缓存数据中
+                this.$store.commit('writeCache');
+            } else if ('memo' !== this.nowIndex && 'memo' === index) {
+                // 切回memo，加载缓存
+                this.$store.commit('readCache');
+        }
         // 修改当前所在的页面
         this.lastIndex = this.nowIndex;
         this.nowIndex = index;
@@ -51,8 +58,8 @@ export default {
   },
   mounted() {
     _this = this;
+    this.indexChange('memo');
     this.nowIndex = 'memo';
-    this.lastIndex = 'memo';
   },
   watch: {
     nowIndex() {
@@ -67,7 +74,7 @@ export default {
 ipcRenderer.on('app-close', ()=>{
   let tray = _this.$store.state.setting.isTray;
   // 写入缓存 待实现
-  
+  _this.$store.commit('writeCache');
   // 判断是否要最小化托盘
   if(tray) {
     // 如果设置了托盘，通知主进程要最小化托盘

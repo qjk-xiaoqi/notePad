@@ -1,4 +1,4 @@
-
+import cache from '../../assets/dataBase';
 const state = {
     unfinishWork:[],
     finishWork:[],
@@ -45,6 +45,26 @@ const mutations = {
     delFinish(state, id){
         let index = findIndex(state.finishWork, id);
         state.finishWork.splice(index, 1);
+    },
+
+    writeCache(state) {
+        cache.saveWorkData({
+            unfinishWork: state.unfinishWork,
+            finishWork: state.finishWork
+        });
+    },
+    readCache(state) {
+        let data = cache.getWorkData();
+        // 检测unfinishWork是否有缓存
+        if (data.unfinishWork) {
+            state.unfinishWork.length = 0;
+            state.unfinishWork.push(...data.unfinishWork);
+        }
+        // 检测finishedWork是否有缓存
+        if (data.finishWork) {
+            state.finishWork.length = 0;
+            state.finishWork.push(...data.finishWork);
+        }
     }
 };
 

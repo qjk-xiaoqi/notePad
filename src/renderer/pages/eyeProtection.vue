@@ -27,7 +27,7 @@ export default {
     return {
       isOpen: false,
       defTime: 60,
-      duration: 1// 休息时间
+      duration: 10// 休息时间
     }
   },
   methods: {
