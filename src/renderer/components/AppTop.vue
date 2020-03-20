@@ -44,7 +44,7 @@ export default {
     height: 30px;
     line-height: 30px;
     border-bottom: 1px solid #f5f5f5;
-    background-color: pink;
+    background-color: #e9e6e6;
     /* 设置拖动栏 */
     -webkit-app-region: drag;  
 }
@@ -54,7 +54,7 @@ export default {
 } 
 .right-side {
     float: right;
-     background-color: pink;
+     background-color: #e9e6e6 ;
 }
 .top-icon {
   cursor: pointer;

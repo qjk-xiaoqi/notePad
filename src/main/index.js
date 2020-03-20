@@ -27,7 +27,7 @@ function createWindow () {
     useContentSize: true,
     width: 1000,
     // 隐藏默认窗口框
-    // frame: false
+    frame: false
   })
 
   mainWindow.loadURL(winURL)
